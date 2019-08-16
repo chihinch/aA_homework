@@ -5,11 +5,10 @@ class Map
     end
 
     def set(key, value)
-        if @current_map.none? {|pair| pair.first == key}
-            @current_map << [key, value]
-        else
-            puts "Key already exists!"
+        @current_map.each_with_index do |pair, idx|
+            @current_map[idx] = [key, value] if pair.first == key
         end
+        @current_map << [key, value]
         self
     end
 
