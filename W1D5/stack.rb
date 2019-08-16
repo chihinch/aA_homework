@@ -4,11 +4,12 @@ class Stack
   end
 
   def push(el)
-    @result << el
+    @current_stack << el
+    self
   end
 
   def pop
-    @result.pop
+    @current_stack.pop
   end
 
   def peek
