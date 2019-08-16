@@ -13,11 +13,12 @@ class Map
     end
 
     def get(key)
-        find_pair_w_key(key).first
+        @current_map.find {|pair| pair.first == key}
     end
 
     def delete(key)
-        @current_map.delete(find_pair_w_key(key))
+        @current_map.delete(get(key))
+        self
     end
 
     def find_pair_w_key(key)
