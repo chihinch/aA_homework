@@ -21,10 +21,6 @@ class Map
         self
     end
 
-    def find_pair_w_key(key)
-        @current_map.bsearch { |pair| pair.first == key }
-    end
-
     def show
         @current_map
     end
