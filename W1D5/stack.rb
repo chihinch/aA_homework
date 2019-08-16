@@ -1,17 +1,17 @@
 class Stack
-    def initialize
-      # create ivar to store stack here!
-    end
-
-    def push(el)
-      # adds an element to the stack
-    end
-
-    def pop
-      # removes one element from the stack
-    end
-
-    def peek
-      # returns, but doesn't remove, the top element in the stack
-    end
+  def initialize
+    @current_stack = Array.new
   end
+
+  def push(el)
+    @result << el
+  end
+
+  def pop
+    @result.pop
+  end
+
+  def peek
+    @current_stack.last
+  end
+end
