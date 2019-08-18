@@ -2,6 +2,8 @@ class Board
   attr_accessor :cups
 
   def initialize(name1, name2)
+    @player1 = name1
+    @player2 = name2
     @cups = Array.new(14) {Array.new}
     place_stones
     end
@@ -20,22 +22,29 @@ class Board
   def make_move(start_pos, current_player_name)
     num_stones_in_start_cup = @cups[start_pos].length # Count how many stones there were in the selected cup
     @cups[start_pos].clear # Empty the selected cup
-    cup_index_counter = start_pos + 1 # Begin counting the cup indices from the cup after the start point
+
+    cup_index = start_pos
+
     until num_stones_in_start_cup == 0
-      if start_pos < 6 # Begin by 
-        cup_index_counter = 0 if cup_index_counter == 13 # Skip cup 13 (and move on to cup 0) if player is on side 1
-      else
-        cup_index_counter = 7 if  cup_index_counter == 6 # Skip cup 6 (and move on to cup 7) if player is on side 2
+      cup_index += 1 # Advance to the next cup
+      if cup_index == 6 && current_player_name == @player1
+        cup_index = 7 # Skip cup 6 if side 1 is playing
+      elsif (cup_index == 12 && current_player_name == @player2) || cup_index > 13
+        cup_index = 0 # Skip cup 13 if side 2 is playing, or reset to cup 0 if the cup_index goes out of bounds
       end
-      @cups[cup_index_counter] << :stone
+      @cups[cup_index] << :stone # Add a stone to the current cup
       num_stones_in_start_cup -= 1
-      cup_index_counter += 1
-      cup_index_counter = 0 if cup_index_counter > 13
     end
+
+    render
+    next_turn(cup_index)
+
   end
 
   def next_turn(ending_cup_idx)
     # helper method to determine whether #make_move returns :switch, :prompt, or ending_cup_idx
+    return :switch if @cups[ending_cup_idx].length - 1 == 0
+    return :prompt if ending_cup_idx = nil
   end
 
   def render
@@ -47,6 +56,7 @@ class Board
   end
 
   def one_side_empty?
+    @cups[0..5].all? {|cup| cup.empty?} || @cups[7..12].all? {|cup| cup.empty?}
   end
 
   def winner
