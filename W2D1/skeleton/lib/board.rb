@@ -18,6 +18,20 @@ class Board
   end
 
   def make_move(start_pos, current_player_name)
+    num_stones_in_start_cup = @cups[start_pos].length # Count how many stones there were in the selected cup
+    @cups[start_pos].clear # Empty the selected cup
+    cup_index_counter = start_pos + 1 # Begin counting the cup indices from the cup after the start point
+    until num_stones_in_start_cup == 0
+      if start_pos < 6 # Begin by 
+        cup_index_counter = 0 if cup_index_counter == 13 # Skip cup 13 (and move on to cup 0) if player is on side 1
+      else
+        cup_index_counter = 7 if  cup_index_counter == 6 # Skip cup 6 (and move on to cup 7) if player is on side 2
+      end
+      @cups[cup_index_counter] << :stone
+      num_stones_in_start_cup -= 1
+      cup_index_counter += 1
+      cup_index_counter = 0 if cup_index_counter > 13
+    end
   end
 
   def next_turn(ending_cup_idx)
