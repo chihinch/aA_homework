@@ -12,7 +12,10 @@ class Simon
   end
 
   def play
-    take_turn until game_over
+    until game_over
+      take_turn
+      system("clear")
+    end
     game_over_message
     reset_game
   end
@@ -22,6 +25,7 @@ class Simon
     require_sequence
     unless game_over
       round_success_message
+      sleep(1)
       self.sequence_length += 1
     end
   end
@@ -29,10 +33,10 @@ class Simon
   def show_sequence
     add_random_color
     seq.each do |color|
-      system("clear")
       puts color
       sleep(1)
       system("clear")
+      sleep(0.5)
     end
   end
 
@@ -54,6 +58,7 @@ class Simon
 
   def game_over_message
     puts "You lose :("
+    puts "You made it through #{sequence_length - 1} rounds"
   end
 
   def reset_game
@@ -62,3 +67,6 @@ class Simon
     self.seq = Array.new
   end
 end
+
+s = Simon.new
+s.play
