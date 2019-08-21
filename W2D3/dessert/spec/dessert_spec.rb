@@ -28,7 +28,10 @@ describe Dessert do
   end
 
   describe "#add_ingredient" do
-    it "adds an ingredient to the ingredients array"
+    it "adds an ingredient to the ingredients array" do
+      cannoli.add_ingredient("flour")
+      expect(cannoli.ingredients).to eq(["flour"])
+    end
   end
 
   describe "#mix!" do
