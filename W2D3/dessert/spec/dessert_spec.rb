@@ -6,8 +6,8 @@ Instructions: implement all of the pending specs (the `it` statements without bl
 =end
 
 describe Dessert do
-  subject(:cannoli) { Dessert.new("cannoli", 2, chef)}
-  let(:chef) { double("chef") }
+  let(:chef) { double("chef",  name: "Gordon Ramsey") }
+  let(:cannoli) { Dessert.new("cannoli", 5, chef)}
 
   describe "#initialize" do
     it "sets a type" do
@@ -15,7 +15,7 @@ describe Dessert do
     end
 
     it "sets a quantity" do
-      expect(cannoli.quantity).to eq(2)
+      expect(cannoli.quantity).to eq(5)
     end
 
     it "starts ingredients as an empty array" do
@@ -30,7 +30,7 @@ describe Dessert do
   describe "#add_ingredient" do
     it "adds an ingredient to the ingredients array" do
       cannoli.add_ingredient("flour")
-      expect(cannoli.ingredients).to eq(["flour"])
+      expect(cannoli.ingredients).to include("flour")
     end
   end
 
@@ -43,19 +43,25 @@ describe Dessert do
   describe "#eat" do
     it "subtracts an amount from the quantity" do
       cannoli.eat(1)
-      expect(cannoli.quantity).to eq(1)
+      expect(cannoli.quantity).to eq(4)
     end
 
     it "raises an error if the amount is greater than the quantity" do
-      expect(cannoli.eat(3)).to raise_error
+      expect {cannoli.eat(10) }.to raise_error("not enough left!")
     end
   end
 
   describe "#serve" do
-    it "contains the titleized version of the chef's name"
+    it "contains the titleized version of the chef's name" do
+      allow(chef).to receive(:titleize).and_return("Gordon Ramsey the Great Baker")
+      expect(cannoli.serve).to eq("Gordon Ramsey the Great Baker has made 5 cannolis!")
+    end
   end
 
   describe "#make_more" do
-    it "calls bake on the dessert's chef with the dessert passed in"
+    it "calls bake on the dessert's chef with the dessert passed in" do
+      expect(chef).to receive(:bake).with(cannoli)
+      cannoli.make_more
+    end
   end
 end
