@@ -35,13 +35,20 @@ describe Dessert do
   end
 
   describe "#mix!" do
-    it "shuffles the ingredient array"
+    it "shuffles the ingredient array" do
+      # expect(cannoli.ingredients).to receive(:shuffle!)
+    end
   end
 
   describe "#eat" do
-    it "subtracts an amount from the quantity"
+    it "subtracts an amount from the quantity" do
+      cannoli.eat(1)
+      expect(cannoli.quantity).to eq(1)
+    end
 
-    it "raises an error if the amount is greater than the quantity"
+    it "raises an error if the amount is greater than the quantity" do
+      expect(cannoli.eat(3)).to raise_error
+    end
   end
 
   describe "#serve" do
