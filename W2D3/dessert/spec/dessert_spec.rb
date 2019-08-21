@@ -14,9 +14,13 @@ describe Dessert do
       expect(cannoli.type).to eq("cannoli")
     end
 
-    it "sets a quantity"
+    it "sets a quantity" do
+      expect(cannoli.quantity).to eq(2)
+    end
 
-    it "starts ingredients as an empty array"
+    it "starts ingredients as an empty array" do
+      expect(cannoli.ingredients).to be_empty
+    end
 
     it "raises an argument error when given a non-integer quantity"
   end
