@@ -22,7 +22,9 @@ describe Dessert do
       expect(cannoli.ingredients).to be_empty
     end
 
-    it "raises an argument error when given a non-integer quantity"
+    it "raises an argument error when given a non-integer quantity" do
+      expect { Dessert.new("flan", "FIVE", chef) }.to raise_error(ArgumentError)
+    end
   end
 
   describe "#add_ingredient" do
