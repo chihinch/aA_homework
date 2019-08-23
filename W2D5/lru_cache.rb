@@ -15,21 +15,22 @@ class LRUCache
       # adds element to cache according to LRU principle
 
         if cache.include?(el)
-            debugger
+            # debugger
             # If the cache already contains the element...
             # Delete the existing element and add the new one to the back
             cache.delete(el)
             cache << el
 
         elsif count >= size
-            debugger
+            # Is this where the flaw is? Because the first element is not necessarily the LRU?
+            # debugger
             # If the cache's size is at its limit...
             # Take off the first element and add the element to the back
             # (presumably the first element is the LRU?)
             cache.shift(1)
             cache << el
         else
-            debugger
+            # debugger
             # If neither of these apply, just add the element
             cache << el
         end
