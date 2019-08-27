@@ -28,21 +28,21 @@ class Play
       WHERE
         title = ?
     SQL
-    data.map { |datum| Play.new(datum) }
+    return nil unless data.length > 0
+    Play.new(data.first)
   end
 
   def self.find_by_playwright(name)
-    data = PlayDBConnection.instance.execute(<<-SQL, name)
+    playwright = Playwright.find_by_name(name)
+    raise "#{name} not found in DB" unless playwright
+
+    data = PlayDBConnection.instance.execute(<<-SQL, playwright.id)
       SELECT
         *
       FROM
         plays
-      JOIN
-        playwrights
-        ON
-          playwrights.id = plays.playright_id
       WHERE
-        name = ?
+        playright_id = ?
     SQL
     data.map { |datum| Play.new(datum) }
   end
@@ -94,6 +94,8 @@ class Playwright
       WHERE
         name = ?
     SQL
+    return nil unless data.length > 0
+    Playwright.new(data.first)
   end
 
   attr_accessor :id, :name, :birth_year
@@ -121,25 +123,23 @@ class Playwright
       UPDATE
         playwrights
       SET
-        name = ?,birth_year = ?
+        name = ?, birth_year = ?
       WHERE
         id = ?
     SQL
   end
 
   def get_plays
-    data = PlayDBConnection.instance.execute(<<-SQL, self.name)
+    raise "#{self} not in database" unless self.id
+    data = PlayDBConnection.instance.execute(<<-SQL, self.id)
       SELECT
         *
       FROM
         plays
-      JOIN
-        playwrights
-        ON
-          playwrights.id = plays.playright_id
       WHERE
-        name = ?
+        playwright_id = ?
     SQL
+    data.map { |datum| Play.new(datum) }
   end
 
 end
