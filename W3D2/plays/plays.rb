@@ -7,7 +7,7 @@ class PlayDBConnection < SQLite3::Database
   def initialize
     super('plays.db')
     self.type_translation = true
-    self.results_as_hash = true
+    self.results_as_hash = true # Saves columns as keys and their values as values in a hash
   end
 end
 
@@ -15,11 +15,11 @@ class Play
   attr_accessor :id, :title, :year, :playwright_id
 
   def self.all
-    data = PlayDBConnection.instance.execute("SELECT * FROM plays")
-    data.map { |datum| Play.new(datum) }
+    data = PlayDBConnection.instance.execute("SELECT * FROM plays") # Returns an array of hashes for each entity in the DB
+    data.map { |datum| Play.new(datum) } # Creates a new Play object for each DB entity
   end
 
-  def self.find_by_title(title)
+  def self.find_by_title(title) # Finds all info about a particular play by title
     data = PlayDBConnection.instance.execute(<<-SQL, title)
       SELECT
         *
@@ -29,10 +29,10 @@ class Play
         title = ?
     SQL
     return nil unless data.length > 0
-    Play.new(data.first)
+    Play.new(data.first) 
   end
 
-  def self.find_by_playwright(name)
+  def self.find_by_playwright(name) # Finds all plays written by a given playwright
     playwright = Playwright.find_by_name(name)
     raise "#{name} not found in DB" unless playwright
 
@@ -47,14 +47,14 @@ class Play
     data.map { |datum| Play.new(datum) }
   end
 
-  def initialize(options)
+  def initialize(options) # Creates new Play object whose attributes come from the DB
     @id = options['id']
     @title = options['title']
     @year = options['year']
     @playwright_id = options['playwright_id']
   end
 
-  def create
+  def create # Inserts the Play object into the database
     raise "#{self} already in database" if self.id
     PlayDBConnection.instance.execute(<<-SQL, self.title, self.year, self.playwright_id)
       INSERT INTO
@@ -65,7 +65,7 @@ class Play
     self.id = PlayDBConnection.instance.last_insert_row_id
   end
 
-  def update
+  def update # Updates the database according to the Play object's instance variables
     raise "#{self} not in database" unless self.id
     PlayDBConnection.instance.execute(<<-SQL, self.title, self.year, self.playwright_id, self.id)
       UPDATE
@@ -82,7 +82,7 @@ end
 class Playwright
   def self.all
     data = PlayDBConnection.instance.execute("SELECT * FROM playwrights")
-    data.map { |datum| Play.new(datum) }
+    data.map { |datum| Playwright.new(datum) }
   end
 
   def self.find_by_name(name)
