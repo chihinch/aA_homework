@@ -23,6 +23,7 @@
 
 def find_angelina
   #find Angelina Jolie by name in the actors table
+  Actor.find_by(name: 'Angelina Jolie')
 
 end
 
