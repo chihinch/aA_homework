@@ -20,5 +20,9 @@ class House < ApplicationRecord
 
   def better_seeds_query
     # TODO: your code here
+    # Since I'm not aggregating here, I'll use include
+    seeds = self
+      .plants
+      .includes(:seeds)
   end
 end
