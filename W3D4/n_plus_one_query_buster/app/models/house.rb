@@ -21,8 +21,15 @@ class House < ApplicationRecord
   def better_seeds_query
     # TODO: your code here
     # Since I'm not aggregating here, I'll use include
-    seeds = self
+    plants = self
       .plants
       .includes(:seeds)
+
+    seeds = Array.new
+    plants.each do |plant|
+      seeds << plant.seeds
+    end
+
+    seeds
   end
 end
