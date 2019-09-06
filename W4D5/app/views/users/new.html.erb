@@ -1,0 +1,28 @@
+<h1>Create a new MusicApp Account</h1>
+
+<%= render partial: 'layouts/errors' %>
+
+<br>
+
+<form action="<%= users_url %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label for="email">Email Address</label>
+  <input type="text" id="email" name="user[email]" value="">
+
+  <br><br>
+
+  <label for="password">Password (minimum 6 characters)</label>
+  <input type="password" id="password" name="user[password]" value="">
+
+  <br><br>
+
+  <input type="submit" value="Sign Up!">
+
+</form>
+
+<br><br>
+
+<% content_for :footer do %>
+  <p>This is a user signup page.</p>
+<% end %>

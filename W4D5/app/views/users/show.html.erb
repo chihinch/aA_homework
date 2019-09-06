@@ -1,0 +1,10 @@
+<h1>Hello there!</h1>
+<h2>You are logged in as: <%= current_user.email %></h2>
+
+<a href="<%= bands_url %>">View Bands</a>
+
+<br>
+
+<% content_for :footer do %>
+  <p>This is a user show page.</p>
+<% end %>
