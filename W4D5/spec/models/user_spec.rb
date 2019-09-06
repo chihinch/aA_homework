@@ -32,7 +32,7 @@ RSpec.describe User, type: :model do
 
   describe "::find_by_credentials" do
     User.create(email: 'cherry@fruits.com', password: '123456') unless User.exists?(:email => 'cherry@fruits.com')
-    cherry = User.last
+    cherry = User.find_by(email: 'cherry@fruits.com')
 
     it "should find an existing user with correct credentials" do
       expect(User.find_by_credentials('cherry@fruits.com', '123456')).to eq(cherry)
