@@ -1,0 +1,14 @@
+<h1>Hello there!</h1>
+<h2>You are logged in as: <%= current_user.email %></h2>
+
+<br>
+
+<h2>All the Bands</h2>
+
+<ul>
+  <% @bands.each do |band| %>
+    <li><a href="<%= band_url(band) %>"><%= band.name %></a></li>
+  <% end %>
+</ul>
+
+<a href="<%= new_band_url %>">Create a New Band</a>

@@ -1,0 +1,14 @@
+<h1>Hello there!</h1>
+<h2>You are logged in as: <%= current_user.email %></h2>
+
+<h2>Info About: <%= @band.name %></h2>
+
+<a href="<%= edit_band_url(@band) %>">Edit This Band</a><br>
+<%= button_to("Delete Band", band_url(@band), method: :delete) %>
+<a href="<%= bands_url %>">Go Back to All Bands</a>
+
+<br>
+
+<% content_for :footer do %>
+  <p>This is a band show page.</p>
+<% end %>
