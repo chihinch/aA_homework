@@ -100,7 +100,7 @@ Elephant.prototype.play = function () {
 const babar = new Elephant("Babar", 76, ["balancing a ball", "dancing", "riding a bicycle"]);
 babar.trumpet();
 console.log(babar.height);
-babar.grow;
+babar.grow();
 console.log(babar.height);
 babar.addTrick("sleeping");
 babar.play();
