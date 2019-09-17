@@ -23,6 +23,7 @@ View.prototype.exercise1 = function () {
   //Result: Every square should turn orange (we already have a CSS rule)
 
   //your code here!
+  $('.square').addClass("orange"); // elements with square class also get orange class 
 };
 
 View.prototype.exercise2 = function () {
@@ -30,6 +31,7 @@ View.prototype.exercise2 = function () {
   //Result: Every square vanishes
 
   //your code here!
+  $('.square').remove(); // remove all elements with square class
 };
 
 View.prototype.exercise3 = function () {
@@ -37,6 +39,8 @@ View.prototype.exercise3 = function () {
   //Result: An <h1> with the text 'i love jquery' appears under the grid.
 
   //your code here!
+  const h1 = $('h1').text('i love jquery'); // create a h1 element whose text is 'i love jquery'
+  $('#easel').append(h1); // append this h1 to the easel element
 };
 
 View.prototype.exercise4 = function () {
@@ -44,6 +48,11 @@ View.prototype.exercise4 = function () {
   //Result: Your name appears in every other square.
 
   //your code here!
+  $('.square').each(function(index) {
+    if (index % 2 == 0) {
+      $(this).text("Danny"); // wouldn't be able to use big arrow syntax since context is not individual squares
+    }
+  } )
 };
 
 View.prototype.exercise5 = function () {
@@ -55,6 +64,10 @@ View.prototype.exercise5 = function () {
   //  'data-pos' of every square
 
   //your code here!
+  $('.square').on("click", el => {
+    const $sq = $(el.currentTarget); // $sq is the clicked square
+    alert($sq.attr("data-pos")); // obtain square's coordinates via its data-pos attr
+  })
 };
 
 View.prototype.exercise6 = function () {
@@ -65,6 +78,10 @@ View.prototype.exercise6 = function () {
   //hint: use window._randomColorString() (defined at top) to get a random color!
 
   //your code here!
+  $('.square').each( (idx, el) => {
+    const $sq = $(el);
+    $sq.css("background-color", _randomColorString());
+  })
 };
 
 View.prototype.exercise7 = function(){
@@ -75,6 +92,11 @@ View.prototype.exercise7 = function(){
   //rainbow.
 
   //your code here!
+  // event is on the container of the element that we're mousing over?
+  $('#easel').on("mouseenter", ".square", el => { 
+    const $sq = $(el.currentTarget);
+    console.log($sq.css("background-color"));
+  })
 };
 
 
