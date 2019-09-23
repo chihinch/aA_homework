@@ -1,4 +1,4 @@
-import ADD_LOCATION from "./actions";
+// import SWITCH_LOCATION from "./actions";
 
 const initialState = {
   city: "Please Select", 
@@ -6,14 +6,17 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  // Object.freeze(state); // safety net to ensure state is not accidentally mutated
+  Object.freeze(state); // safety net to ensure state is not accidentally mutated
   switch (action.type) {
-    case SWITCH_LOCATION:
-      // let nextState = Object.assign({}, state); // deep dup of existing state
+    case "SWITCH_LOCATION":
+      // let nextState = Object.assign({}, state);
+      // nextState.city = action.city;
+      // nextState.jobs = action.jobs;
+      // return nextState;
       return {
         city: action.city,
-        jobs: action.jobs
-      }
+        jobs: action.jobs,
+      };
     default:
       return state;
   }
